@@ -1,0 +1,9 @@
+<div id="login">
+    <label class="form-label">Usuario:</label>
+    <input type="text" class="form-control" [(ngModel)]="usuario.user" name="usuario">
+    <br>
+    <label class="form-label">Contraseña:</label>
+    <input type="password" class="form-control" [(ngModel)]="usuario.password" name="contraseña">
+    <br>
+    <button class="btn btn-success" type="submit" (click)="login()">Iniciar sesión</button>
+</div>

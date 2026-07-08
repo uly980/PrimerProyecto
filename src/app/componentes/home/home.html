@@ -1,0 +1,89 @@
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">{{usuario.nombre}}</a>
+  </div>
+</nav>
+
+<p>Bienvenido a la página de inicio</p>
+<p>Mi carro es {{modelo}} de color {{carro}}</p>
+<br>
+<input type="text" [(ngModel)]="modelo"> <br>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Agregar receta
+</button>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Imagen</th>
+      <th scope="col">Comida</th>
+      <th scope="col">Ingredientes</th>
+      <th scope="col">Porciones</th>
+      <th scope="col">Eliminar</th>
+      <th scope="col">Editar</th>
+      <th scope="col">Imprimir</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let receta of listadoReceta" [ngClass]="{'table-danger': receta.clasificacion == 'Antojitos', 'table-warning': receta.clasificacion == 'Pasta'}">
+      <th scope="row" *ngIf="receta.estatus"> <img src="{{receta.imagenURL}}" alt="" style="height: 50px; width: 50px;"> </th>
+      <td *ngIf="receta.estatus">{{receta.nombrereceta}}</td>
+      <td *ngIf="receta.estatus">{{receta.ingredientes}}</td>
+      <td *ngIf="receta.estatus">{{receta.porciones}}</td>
+      <td *ngIf="receta.estatus">
+        <button class="btn btn-danger" (click)="eliminarReceta(receta)">🚮</button>
+      </td>
+      <td *ngIf="receta.estatus">
+        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="editarReceta(receta)">✏️</button>
+      </td>
+      <td *ngIf="receta.estatus">
+        <button class="btn btn-success" (click)="imprimirReceta(receta)">🖨</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<reporte (cerrar)="ocultarReceta()" [reporteRecetas]="parametroreceta" [display]="displayreporte"></reporte>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar receta</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <label class="form-label">Nombre de Receta</label>
+        <input class="form-control" type="text" [(ngModel)]="recetas.nombrereceta">
+
+        <label class="form-label">Ingredientes</label>
+        <input class="form-control" type="text" [(ngModel)]="recetas.ingredientes">
+
+        <label class="form-label">Tiempo de elaboración</label>
+        <input class="form-control" type="number" [(ngModel)]="recetas.tiempo">
+
+        <label class="form-label">Descripción</label>
+        <input class="form-control" type="text" [(ngModel)]="recetas.descripcion">
+
+        <label class="form-label">Porciones</label>
+        <input class="form-control" type="number" [(ngModel)]="recetas.porciones">
+
+        <label class="form-label">Imagen</label>
+        <input class="form-control" type="text" [(ngModel)]="recetas.imagenURL">
+
+        <label class="form-label">Clasificación</label>
+        <select class="form-control" type="text" [(ngModel)]="recetas.clasificacion">
+          <option value="Antojitos">Antojitos</option>
+          <option value="Pasta">Pasta</option>
+          <option value="Otros">Otros</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="guardarReceta()">Guardar receta</button>
+      </div>
+    </div>
+  </div>
+</div>

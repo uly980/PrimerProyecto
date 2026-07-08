@@ -1,0 +1,21 @@
+<div *ngIf = "display" class="card" style="width: 24rem;">
+  <div class="row g-0">
+    <div class="col-5">
+      <img class="img-fluid rounded-start" src="{{reporteRecetas.imagenURL}}" alt="Card image cap" style="object-fit: cover; width: 100%; height: 100%;">
+    </div>
+    <div class="col-7">
+      <div class="card-body">  
+        <h4 class="card-title mb-1">{{reporteRecetas.nombrereceta}}</h4>
+        <p class="card-text text-muted mb-2" style="font-size: 0.9rem;">{{reporteRecetas.ingredientes}}</p>
+        <p class="card-text text-secondary" style="font-size: 0.9rem;">{{reporteRecetas.clasificacion}}</p> 
+        <button class="btn btn-info" (click)="sellar()"> <img src="https://cdn-icons-png.flaticon.com/512/2910/2910787.png" class="img"> <br> Sellar</button>
+      </div>
+    </div>
+  </div>
+  <qrcode [qrdata]="reporteRecetas.nombrereceta" [width]="128" [errorCorrectionLevel]="'M'"></qrcode>
+  <ul class="list-group list-group-flush border-top">
+    <li class="list-group-item">{{reporteRecetas.descripcion}}</li>
+    <li class="list-group-item">{{reporteRecetas.tiempo}} minutos</li>
+    <li class="list-group-item">{{reporteRecetas.porciones}} porciones</li>
+  </ul>
+</div>
