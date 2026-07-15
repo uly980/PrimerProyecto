@@ -2,6 +2,10 @@
 
 Aplicación web desarrollada con **Angular 18** y **Firebase (Firestore)** que permite gestionar un catálogo de recetas de cocina con autenticación de usuario, CRUD completo, exportación a PDF y generación de códigos QR.
 
+Link de prueba: https://primerproyecto-64380.web.app/
+Credenciales:
+usuario: publico
+contraseña: 1234
 ---
 
 ## 📸 Funcionalidades
