@@ -26,7 +26,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let receta of listadoReceta" [ngClass]="{'table-danger': receta.clasificacion == 'Antojitos', 'table-warning': receta.clasificacion == 'Pasta'}">
+    <tr *ngFor="let receta of listadoReceta" [ngClass]="{'table-danger': receta.clasificacion == 'Antojitos', 'table-warning': receta.clasificacion == 'Pasta', 'table-info': receta.clasificacion == 'Otros'}">
       <th scope="row" *ngIf="receta.estatus"> <img src="{{receta.imagenURL}}" alt="" style="height: 50px; width: 50px;"> </th>
       <td *ngIf="receta.estatus">{{receta.nombrereceta}}</td>
       <td *ngIf="receta.estatus">{{receta.ingredientes}}</td>
@@ -81,8 +81,8 @@
         </select>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" (click)="guardarReceta()">Guardar receta</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" #btnCerrar>Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="guardarReceta(btnCerrar)">Guardar receta</button>
       </div>
     </div>
   </div>

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Receta } from "../home/home";
 import Swal from 'sweetalert2';
 import { QRCodeModule } from 'angularx-qrcode';
+import { jsPDF } from 'jspdf';
 
 
 @Component({
@@ -37,6 +38,19 @@ sellar(){
       confirmButtonText: "Si, sellala!"
     }).then((result) => {
         if (result.isConfirmed) {
+          let elemento = document.getElementById('divpadre');
+          let doc = new jsPDF('l','pt','a4');
+
+          doc.html(elemento!,{
+            html2canvas:{
+              scale: 1
+            },
+            x: 15,
+            y: 15,
+            callback: function(doc){
+              doc.save('Receta.pdf');
+            }
+          })
           Swal.fire({
           title: "Sellada!",
           text: "La receta ha sido sellada.",

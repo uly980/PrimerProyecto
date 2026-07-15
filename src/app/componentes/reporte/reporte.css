@@ -1,4 +1,15 @@
 .img{
     width: 30px;
-    height: 3dvh;
+    height: 30px;
+}
+#divpadre{
+    background-color: bisque;
+    border: solid rgb(204, 178, 147) 5px;
+}
+#img1{
+    border: solid white 10px;
+}
+#titulo{
+    font-size: 25px;
+    font-weight: bold;
 }

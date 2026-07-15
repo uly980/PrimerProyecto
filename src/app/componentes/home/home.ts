@@ -43,16 +43,20 @@ export class HomeComponent {
     this.consultaReceta();
   }
 
-  guardarReceta() {
-      if (this.recetas.idreceta === "") {
-        this.recetas.idreceta = this.generarTextoAleatorio(10);
-      }
-      
-      let ruta = doc(this.firestore, "Receta", this.recetas.idreceta);
-      setDoc(ruta, JSON.parse(JSON.stringify(this.recetas))).then(() => {
-        this.recetas = new Receta(); 
-      });
+  guardarReceta(btnCerrar?: HTMLButtonElement) {
+    if (this.recetas.idreceta === "") {
+      this.recetas.idreceta = this.generarTextoAleatorio(10);
     }
+    
+    let ruta = doc(this.firestore, "Receta", this.recetas.idreceta);
+    setDoc(ruta, JSON.parse(JSON.stringify(this.recetas))).then(() => {
+      this.recetas = new Receta(); // Limpia los datos
+ 
+      if (btnCerrar) {
+        btnCerrar.click();
+      }
+    });
+}
 
 
   consultaReceta(){
