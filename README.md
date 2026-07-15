@@ -1,73 +1,170 @@
-# PrimerProyecto
+# 🍽️ PrimerProyecto — Gestión de Recetas
 
-**PrimerProyecto** es una aplicación web sencilla construida con **Angular** (standalone components) y **Firebase Firestore**. Permite a los usuarios crear, listar y almacenar recetas de cocina. Cada receta incluye nombre, ingredientes, tiempo de elaboración, descripción, número de porciones y una URL de imagen.
+Aplicación web desarrollada con **Angular 18** y **Firebase (Firestore)** que permite gestionar un catálogo de recetas de cocina con autenticación de usuario, CRUD completo, exportación a PDF y generación de códigos QR.
 
-## Características principales
-- **Componentes standalone** de Angular sin módulos tradicionales.
-- **Firebase Firestore** configurado en `src/app/app.config.ts` para almacenar recetas en tiempo real.
-- UI responsiva con modal para añadir recetas y tabla para visualizarlas.
-- Uso de formularios con `ngModel` para la captura de datos.
-- Deploy opcional a **Firebase Hosting**.
+---
 
-## Estructura del proyecto
+## 📸 Funcionalidades
+
+- 🔐 **Login** con validación contra Firestore
+- 📋 **Listado de recetas** en tiempo real (Firestore listener)
+- ➕ **Agregar / Editar** recetas mediante un modal de Bootstrap
+- 🗑️ **Eliminación lógica** de recetas (campo `estatus`)
+- 🎨 **Clasificación visual** por categoría (Antojitos, Pasta, Otros)
+- 🖨️ **Reporte** con vista de tarjeta, código QR y exportación a PDF
+- ✅ **SweetAlert2** para confirmaciones elegantes
+
+---
+
+## 🛠️ Tecnologías Utilizadas
+
+| Tecnología | Versión | Uso |
+|---|---|---|
+| Angular | 18 | Framework principal |
+| AngularFire | 18 | Integración con Firebase |
+| Firebase / Firestore | 12 | Base de datos en la nube |
+| Bootstrap | via CDN | Estilos y componentes UI |
+| SweetAlert2 | 11 | Alertas y confirmaciones |
+| jsPDF | 4 | Exportación a PDF |
+| angularx-qrcode | 18 | Generación de códigos QR |
+| Angular SSR | 18 | Server-Side Rendering |
+
+---
+
+## 📁 Estructura del Proyecto
+
 ```
-PrimerProyecto/
-├─ src/
-│  ├─ app/
-│  │  ├─ app.config.ts        # Configuración de Angular + Firebase
-│  │  ├─ enviroment.ts        # Credenciales de Firebase
-│  │  ├─ componentes/
-│  │  │  └─ home/            # HomeComponent (lista y modal de recetas)
-│  │  └─ app.routes.ts        # Rutas Angular (solo Home)
-│  └─ index.html               # Entrada HTML
-├─ angular.json                # Configuración Angular CLI
-├─ firebase.json               # Configuración Firebase Hosting
-├─ firestore.rules            # Reglas de seguridad (permite leer/escribir hasta 2026‑06‑13)
-└─ README.md                  # Este documento
+src/
+├── app/
+│   ├── componentes/
+│   │   ├── login/          # Pantalla de inicio de sesión
+│   │   │   ├── login.ts
+│   │   │   ├── login.html
+│   │   │   └── login.css
+│   │   ├── home/           # Pantalla principal (CRUD de recetas)
+│   │   │   ├── home.ts
+│   │   │   ├── home.html
+│   │   │   └── home.css
+│   │   └── reporte/        # Tarjeta de detalle + PDF + QR
+│   │       ├── reporte.ts
+│   │       ├── reporte.html
+│   │       └── reporte.css
+│   ├── app.component.ts
+│   ├── app.config.ts       # Providers globales (Firebase, Router)
+│   ├── app.routes.ts       # Definición de rutas
+│   └── enviroment.ts       # Configuración de Firebase
+├── index.html
+├── main.ts
+└── styles.css
 ```
 
-## Instalación y ejecución local
+---
+
+## 🗄️ Colecciones de Firestore
+
+### `usuario`
+| Campo | Tipo | Descripción |
+|---|---|---|
+| `idusuario` | string | Identificador único |
+| `user` | string | Nombre de usuario |
+| `password` | string | Contraseña |
+| `nombre` | string | Nombre completo |
+
+### `Receta`
+| Campo | Tipo | Descripción |
+|---|---|---|
+| `idreceta` | string | Identificador único (10 chars aleatorios) |
+| `nombrereceta` | string | Nombre de la receta |
+| `ingredientes` | string | Lista de ingredientes |
+| `tiempo` | number | Tiempo de elaboración (minutos) |
+| `descripcion` | string | Descripción del platillo |
+| `porciones` | number | Número de porciones |
+| `imagenURL` | string | URL de la imagen |
+| `clasificacion` | string | Categoría: `Antojitos`, `Pasta`, `Otros` |
+| `estatus` | boolean | `true` = activa, `false` = eliminada |
+
+---
+
+## 🚀 Instalación y Ejecución
+
+### Requisitos previos
+- [Node.js](https://nodejs.org/) v18 o superior
+- [Angular CLI](https://angular.io/cli) v18
+- Cuenta en [Firebase](https://firebase.google.com/)
+
+### Pasos
+
 ```bash
-# Clonar el repositorio (cuando esté en GitHub)
-git clone <repo-url>
+# 1. Clonar el repositorio
+git clone <url-del-repositorio>
 cd PrimerProyecto
 
-# Instalar dependencias
+# 2. Instalar dependencias
 npm install
 
-# Ejecutar la aplicación en modo desarrollo
-npm run dev   # o 'ng serve'
+# 3. Ejecutar en modo desarrollo
+npm start
 ```
-Abre `http://localhost:4200` en tu navegador.
 
-## Despliegue a Firebase Hosting (opcional)
+La aplicación estará disponible en `http://localhost:4200`
+
+### Build de producción
+
 ```bash
-# Compilar la aplicación Angular
 npm run build
-
-# Deploy usando Firebase CLI
-firebase deploy --only hosting
 ```
 
-## Flujo Git (baseline)
-1. `git init` – inicializa el repositorio (si no está creado).
-2. `git add .` – prepara todos los archivos (respeta `.gitignore`).
-3. `git commit -m "Initial commit – Angular + Firebase starter"`
-4. Añade el remoto y empuja a la rama principal:
-   ```bash
-   git branch -M main
-   git remote add origin https://github.com/USERNAME/PrimerProyecto.git
-   git push -u origin main
-   ```
-5. Para nuevas funcionalidades, usa ramas de feature:
-   ```bash
-   git checkout -b feature/nueva‑receta
-   # ... cambios ...
-   git add .
-   git commit -m "Add recipe creation UI"
-   git push -u origin feature/nueva‑receta
-   ```
-   Luego abre un Pull Request.
+---
 
-## Licencia
-MIT
+## ⚙️ Configuración de Firebase
+
+Edita el archivo `src/app/enviroment.ts` con las credenciales de tu proyecto Firebase:
+
+```typescript
+export const enviroment = {
+    firebase: {
+        apiKey: "TU_API_KEY",
+        authDomain: "TU_PROJECT.firebaseapp.com",
+        projectId: "TU_PROJECT_ID",
+        storageBucket: "TU_PROJECT.firebasestorage.app",
+        messagingSenderId: "TU_SENDER_ID",
+        appId: "TU_APP_ID"
+    }
+}
+```
+
+> ⚠️ **Importante:** No subas tus credenciales reales al repositorio. Considera usar variables de entorno o el archivo `.gitignore` para protegerlas.
+
+---
+
+## 🔒 Reglas de Firestore
+
+Asegúrate de configurar las reglas de seguridad en la consola de Firebase. Para desarrollo puedes usar:
+
+```
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
+```
+
+> ⚠️ **Para producción**, implementa reglas de seguridad adecuadas que restrinjan el acceso por usuario.
+
+---
+
+## 🧩 Rutas de la Aplicación
+
+| Ruta | Componente | Descripción |
+|---|---|---|
+| `/` | `Login` | Pantalla de autenticación |
+| `/home` | `HomeComponent` | Gestión de recetas |
+
+---
+
+## 📄 Licencia
+
+Proyecto académico — Universidad del Noreste (UNE) · Aplicaciones para Internet
