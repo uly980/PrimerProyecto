@@ -1,62 +1,73 @@
 # PrimerProyecto
 
-A simple Angular + Firebase project that manages a list of recipes.
+**PrimerProyecto** es una aplicación web sencilla construida con **Angular** (standalone components) y **Firebase Firestore**. Permite a los usuarios crear, listar y almacenar recetas de cocina. Cada receta incluye nombre, ingredientes, tiempo de elaboración, descripción, número de porciones y una URL de imagen.
 
-## Features
-- Angular standalone components
-- Firebase Firestore integration (configured in `src/app/app.config.ts`)
-- Basic CRUD UI for recipes (add, list)
+## Características principales
+- **Componentes standalone** de Angular sin módulos tradicionales.
+- **Firebase Firestore** configurado en `src/app/app.config.ts` para almacenar recetas en tiempo real.
+- UI responsiva con modal para añadir recetas y tabla para visualizarlas.
+- Uso de formularios con `ngModel` para la captura de datos.
+- Deploy opcional a **Firebase Hosting**.
 
-## Prerequisites
-- Node.js (>= 18)
-- npm
-- Angular CLI (`npm i -g @angular/cli`)
-- A Firebase project (already configured in `src/app/enviroment.ts`)
+## Estructura del proyecto
+```
+PrimerProyecto/
+├─ src/
+│  ├─ app/
+│  │  ├─ app.config.ts        # Configuración de Angular + Firebase
+│  │  ├─ enviroment.ts        # Credenciales de Firebase
+│  │  ├─ componentes/
+│  │  │  └─ home/            # HomeComponent (lista y modal de recetas)
+│  │  └─ app.routes.ts        # Rutas Angular (solo Home)
+│  └─ index.html               # Entrada HTML
+├─ angular.json                # Configuración Angular CLI
+├─ firebase.json               # Configuración Firebase Hosting
+├─ firestore.rules            # Reglas de seguridad (permite leer/escribir hasta 2026‑06‑13)
+└─ README.md                  # Este documento
+```
 
-## Setup
+## Instalación y ejecución local
 ```bash
-# Clone the repo (once it is pushed)
+# Clonar el repositorio (cuando esté en GitHub)
 git clone <repo-url>
 cd PrimerProyecto
 
-# Install dependencies
+# Instalar dependencias
 npm install
 
-# Serve the app locally
-npm run dev   # or ng serve
+# Ejecutar la aplicación en modo desarrollo
+npm run dev   # o 'ng serve'
 ```
+Abre `http://localhost:4200` en tu navegador.
 
-## Deploy to Firebase Hosting (optional)
+## Despliegue a Firebase Hosting (opcional)
 ```bash
-# Build the Angular app
+# Compilar la aplicación Angular
 npm run build
 
-# Deploy using Firebase CLI
+# Deploy usando Firebase CLI
 firebase deploy --only hosting
 ```
 
-## Git Workflow (baseline)
-1. `git init` – initialise repository (if not already)
-2. `git add .` – stage all files (respect `.gitignore`)
-3. `git commit -m "Initial commit"`
-4. Create a remote repository on GitHub/Bitbucket/GitLab and add it:
-   ```bash
-   git remote add origin https://github.com/USERNAME/PrimerProyecto.git
-   ```
-5. Push the main branch:
+## Flujo Git (baseline)
+1. `git init` – inicializa el repositorio (si no está creado).
+2. `git add .` – prepara todos los archivos (respeta `.gitignore`).
+3. `git commit -m "Initial commit – Angular + Firebase starter"`
+4. Añade el remoto y empuja a la rama principal:
    ```bash
    git branch -M main
+   git remote add origin https://github.com/USERNAME/PrimerProyecto.git
    git push -u origin main
    ```
-6. For future work, use feature branches:
+5. Para nuevas funcionalidades, usa ramas de feature:
    ```bash
-   git checkout -b feature/awesome-feature
-   # make changes
+   git checkout -b feature/nueva‑receta
+   # ... cambios ...
    git add .
-   git commit -m "Add awesome feature"
-   git push -u origin feature/awesome-feature
+   git commit -m "Add recipe creation UI"
+   git push -u origin feature/nueva‑receta
    ```
-   Then open a Pull Request on the hosting platform.
+   Luego abre un Pull Request.
 
-## License
+## Licencia
 MIT
